@@ -5,8 +5,8 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copia los archivos de requerimientos y el código fuente en el contenedor
-COPY requirements.txt requirements.txt
-COPY app.py app.py
+COPY requirements.txt ./
+COPY app.py ./
 
 # Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
@@ -14,5 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Expone el puerto en el que Streamlit se ejecuta por defecto
 EXPOSE 8501
 
+# Copia el Dockerfile como una medida de seguridad
+COPY Dockerfile .
+
 # Comando para ejecutar la aplicación
-CMD ["sh", "-c", "streamlit run app.py"]
+CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.enableCORS=false"]
