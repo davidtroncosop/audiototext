@@ -1,18 +1,18 @@
-# Usar una imagen base oficial de Python con versión 3.9
-FROM python:3.9-slim
+# Usa una imagen base de Python
+FROM python:3.11-slim
 
-# Establecer el directorio de trabajo dentro del contenedor
+# Establece el directorio de trabajo en /app
 WORKDIR /app
 
-# Copiar los archivos de requerimientos y el código de la app en el contenedor
-COPY requirements.txt .
-COPY . .
+# Copia los archivos de requerimientos y el código fuente en el contenedor
+COPY requirements.txt requirements.txt
+COPY app.py app.py
 
-# Instalar las dependencias especificadas en requirements.txt
+# Instala las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Exponer el puerto en el que Streamlit va a correr (8501 por defecto)
+# Expone el puerto en el que Streamlit se ejecuta por defecto
 EXPOSE 8501
 
-# Ejecutar la aplicación Streamlit
-CMD ["streamlit", "run", "app.py"]
+# Comando para ejecutar la aplicación
+CMD ["sh", "-c", "streamlit run app.py"]
